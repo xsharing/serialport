@@ -3,7 +3,6 @@ module System.Hardware.Serialport.Types where
 
 import Data.Word
 
-
 -- | Supported baudrates
 data CommSpeed
   = CS110
@@ -17,21 +16,25 @@ data CommSpeed
   | CS38400
   | CS57600
   | CS115200
-  deriving (Show, Eq, Bounded)
+  deriving (Show, Read, Eq, Bounded)
 
+data StopBits = One | Two
+  deriving (Show, Read, Eq, Bounded)
 
-data StopBits = One | Two deriving (Show, Eq, Bounded)
-data Parity = Even | Odd | NoParity deriving (Show, Eq)
-data FlowControl = Software | NoFlowControl deriving (Show, Eq)
+data Parity = Even | Odd | NoParity
+  deriving (Show, Read, Eq)
 
-data SerialPortSettings = SerialPortSettings {
-                      commSpeed    :: CommSpeed,   -- ^ baudrate
-                      bitsPerWord  :: Word8,       -- ^ Number of bits in a word
-                      stopb        :: StopBits,    -- ^ Number of stop bits
-                      parity       :: Parity,      -- ^ Type of parity
-                      flowControl  :: FlowControl, -- ^ Type of flowcontrol
-                      timeout      :: Int          -- ^ Timeout when receiving a char in tenth of seconds
-                  }
+data FlowControl = Software | NoFlowControl
+  deriving (Show, Read, Eq)
+
+data SerialPortSettings = SerialPortSettings
+  { commSpeed   :: CommSpeed,   -- ^ baudrate
+    bitsPerWord :: Word8,       -- ^ Number of bits in a word
+    stopb       :: StopBits,    -- ^ Number of stop bits
+    parity      :: Parity,      -- ^ Type of parity
+    flowControl :: FlowControl, -- ^ Type of flowcontrol
+    timeout     :: Int          -- ^ Timeout when receiving a char in tenth of seconds
+  } deriving (Show, Read, Eq)
 
 
 -- | Most commonly used configuration
