@@ -1,6 +1,6 @@
 Name:           serialport
 Version:        0.5.0
-Cabal-Version:  >= 1.8
+Cabal-Version:  >= 1.10
 Build-Type:     Simple
 license:        BSD3
 license-file:   LICENSE
@@ -26,7 +26,8 @@ Library
   Other-Modules:      System.Hardware.Serialport.Types
   Build-Depends:      base >= 4 && < 5, bytestring
   ghc-options:        -Wall -fno-warn-orphans
-  
+  default-language: Haskell2010
+    
   if !os(windows)
     Build-Depends:    unix
     Other-Modules:    System.Hardware.Serialport.Posix
@@ -39,6 +40,7 @@ Test-Suite Tests
   type:               exitcode-stdio-1.0
   main-is:            Tests.hs
   hs-source-dirs:     tests
+  default-language:   Haskell2010
   build-depends:      base,
                       HUnit,
                       bytestring,
