@@ -21,11 +21,10 @@ import Control.Monad (void)
 
 import Data.Typeable
 import Data.Bits
+import qualified Data.ByteString.Char8 as B
+import qualified Control.Exception     as Ex
 
 import System.Hardware.Serialport.Types
-
-import qualified Data.ByteString.Char8 as B
-import qualified Control.Exception as Ex
 
 
 data SerialPort = SerialPort

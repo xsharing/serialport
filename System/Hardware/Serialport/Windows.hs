@@ -2,27 +2,31 @@
 {-# OPTIONS_HADDOCK hide #-}
 module System.Hardware.Serialport.Windows where
 
-import Data.Bits
-import qualified Data.ByteString.Char8 as B
-import qualified Data.ByteString.Unsafe as BU
-import qualified System.Win32.Comm as Comm
-import System.Win32.Types
-import System.Win32.File
-import Foreign.Marshal.Alloc
-import System.Hardware.Serialport.Types
-import Control.Monad
 import GHC.IO.Handle
-import GHC.IO.Device
+import GHC.IO.Device 
 import GHC.IO.BufferedIO
-import Data.Typeable
 import GHC.IO.Buffer
 
+import System.Win32.Types
+import System.Win32.File
+import qualified System.Win32.Comm as Comm
 
-data SerialPort = SerialPort {
-                      handle :: HANDLE,
-                      portSettings :: SerialPortSettings
-                  }
-                  deriving (Typeable)
+import Foreign.Marshal.Alloc
+
+import Control.Monad
+
+import Data.Typeable
+import Data.Bits
+import qualified Data.ByteString.Char8  as B
+import qualified Data.ByteString.Unsafe as BU
+
+import System.Hardware.Serialport.Types
+
+
+data SerialPort = SerialPort
+  { handle       :: HANDLE
+  , portSettings :: SerialPortSettings
+  } deriving (Show, Typeable)
 
 
 instance RawIO SerialPort where
