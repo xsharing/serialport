@@ -1,3 +1,5 @@
+![Haskell CI](https://github.com/standardsemiconductor/serialport/workflows/Haskell%20CI/badge.svg)
+
 Objectives
 ==========
 * Cross platform: at least Linux, Windows and Mac OS.
