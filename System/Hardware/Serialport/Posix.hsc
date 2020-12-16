@@ -1,4 +1,6 @@
-{-# LANGUAGE ForeignFunctionInterface, DeriveDataTypeable  #-}
+{-# LANGUAGE ForeignFunctionInterface #-}
+{-# LANGUAGE DeriveDataTypeable       #-}
+{-# LANGUAGE LambdaCase               #-}
 {-# OPTIONS_HADDOCK hide #-}
 module System.Hardware.Serialport.Posix where
 
@@ -235,18 +237,17 @@ configureSettings termOpts settings =
 
 
 commSpeedToBaudRate :: CommSpeed -> BaudRate
-commSpeedToBaudRate speed =
-    case speed of
-      CS110 -> B110
-      CS300 -> B300
-      CS600 -> B600
-      CS1200 -> B1200
-      CS2400 -> B2400
-      CS4800 -> B4800
-      CS9600 -> B9600
-      CS19200 -> B19200
-      CS38400 -> B38400
-      CS57600 -> B57600
-      CS115200 -> B115200
+commSpeedToBaudRate = \case
+  CS110    -> B110
+  CS300    -> B300
+  CS600    -> B600
+  CS1200   -> B1200
+  CS2400   -> B2400
+  CS4800   -> B4800
+  CS9600   -> B9600
+  CS19200  -> B19200
+  CS38400  -> B38400
+  CS57600  -> B57600
+  CS115200 -> B115200
 
 
