@@ -2,29 +2,34 @@
 {-# OPTIONS_HADDOCK hide #-}
 module System.Hardware.Serialport.Posix where
 
-import qualified Data.ByteString.Char8 as B
-import qualified Control.Exception as Ex
-import System.Posix.IO
-import System.Posix.Types
-import System.Posix.Terminal
-import System.Hardware.Serialport.Types
-import Foreign (Ptr, castPtr, alloca, peek, with)
-import Foreign.C
 import GHC.IO.Handle
-import GHC.IO.Device
+import GHC.IO.Device (RawIO(..), IODevice(..), IODeviceType(Stream))
 import GHC.IO.BufferedIO
-import Data.Typeable
 import GHC.IO.Buffer
 import GHC.IO.Encoding
+
+import System.Posix.IO
+import System.Posix.Types (Fd, ByteCount)
+import System.Posix.Terminal
+
+import Foreign (Ptr, castPtr, alloca, peek, with)
+import Foreign.C
+
 import Control.Monad (void)
+
+import Data.Typeable
 import Data.Bits
 
+import System.Hardware.Serialport.Types
 
-data SerialPort = SerialPort {
-                      fd :: Fd,
-                      portSettings :: SerialPortSettings
-                  }
-                  deriving (Typeable)
+import qualified Data.ByteString.Char8 as B
+import qualified Control.Exception as Ex
+
+
+data SerialPort = SerialPort
+  { fd           :: Fd
+  , portSettings :: SerialPortSettings
+  } deriving (Show, Typeable)
 
 
 instance RawIO SerialPort where
