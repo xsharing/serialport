@@ -34,9 +34,9 @@ data SerialPort = SerialPort
 
 
 instance RawIO SerialPort where
-  read (SerialPort fd' _) ptr n = return . fromIntegral =<< fdReadBuf fd' ptr (fromIntegral n)
+  read (SerialPort fd' _) ptr n = fromIntegral <$> fdReadBuf fd' ptr (fromIntegral n)
   readNonBlocking _ _ _ = error "readNonBlocking not implemented"
-  write (SerialPort fd' _) ptr n = void (fdWriteBuf fd' ptr (fromIntegral n))
+  write (SerialPort fd' _) ptr n = void $ fdWriteBuf fd' ptr (fromIntegral n)
   writeNonBlocking _ _ _ = error "writenonblocking not implemented"
 
 
@@ -82,7 +82,7 @@ openSerial dev settings = do
   fd' <- openFd dev ReadWrite Nothing defaultFileFlags { noctty = True, nonBlock = True }
   setFdOption fd' NonBlockingRead False
   let serial_port = SerialPort fd' defaultSerialSettings
-  return =<< setSerialSettings serial_port settings
+  setSerialSettings serial_port settings
 
 
 -- |Use specific encoding for an action and restore old encoding afterwards
@@ -103,20 +103,20 @@ withEncoding _ fun = fun
 recv :: SerialPort -> Int -> IO B.ByteString
 recv (SerialPort fd' _) n = do
   result <- withEncoding char8 $ Ex.try $ fdRead fd' count :: IO (Either IOError (String, ByteCount))
-  case result of
-     Right (str, _) -> return $ B.pack str
-     Left _         -> return B.empty
+  return $ case result of
+     Right (str, _) -> B.pack str
+     Left _         -> B.empty
   where
     count = fromIntegral n
 
 
 -- |Send bytes
-send :: SerialPort
-        -> B.ByteString
-        -> IO Int          -- ^ Number of bytes actually sent
-send (SerialPort fd' _ ) msg = do
-  ret <- withEncoding char8 (fdWrite fd' (B.unpack msg))
-  return $ fromIntegral ret
+send
+  :: SerialPort
+  -> B.ByteString
+  -> IO Int          -- ^ Number of bytes actually sent
+send (SerialPort fd' _ ) msg =
+  fromIntegral <$> withEncoding char8 (fdWrite fd' (B.unpack msg))
 
 
 -- |Flush buffers
