@@ -14,10 +14,9 @@ import System.Posix.Terminal
 import Foreign (Ptr, nullPtr, castPtr, alloca, peek, with)
 import Foreign.C
 
-import Control.Monad (void)
-
 import Data.Typeable
 import Data.Bits
+
 import qualified Data.ByteString.Char8 as B
 import qualified Control.Exception     as Ex
 
