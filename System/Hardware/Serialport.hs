@@ -42,6 +42,7 @@ module System.Hardware.Serialport (
   ,openSerial
   ,closeSerial
   ,withSerial
+  ,hWithSerial
   -- ** Sending & receiving
   ,send
   ,recv
@@ -58,8 +59,14 @@ import System.Hardware.Serialport.Posix
 #endif
 import System.Hardware.Serialport.Types
 
+import System.IO (Handle, hClose)
 import qualified Control.Exception as Ex
+
 
 -- |Safer device function, so you don't forget to close the device
 withSerial :: FilePath -> SerialPortSettings -> ( SerialPort -> IO a ) -> IO a
 withSerial dev settings = Ex.bracket (openSerial dev settings) closeSerial
+
+-- |Like `withSerial` but using `Handle`
+hWithSerial :: FilePath -> SerialPortSettings -> (Handle -> IO a) -> IO a
+hWithSerial dev settings = Ex.bracket (hOpenSerial dev settings) hClose
