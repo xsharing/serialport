@@ -33,8 +33,7 @@ hOpenSerial :: FilePath
            -> SerialPortSettings
            -> IO Handle
 hOpenSerial dev settings = do
-  (SerialPort fd' _) <- openSerial dev settings
-  h <- fdToHandle fd'
+  h <- fdToHandle . fd =<< openSerial dev settings
   hSetBuffering h NoBuffering
   return h
 
@@ -67,8 +66,8 @@ withEncoding _ fun = fun
 
 -- |Receive bytes, given the maximum number
 recv :: SerialPort -> Int -> IO B.ByteString
-recv (SerialPort fd' _) n = do
-  result <- withEncoding char8 $ Ex.try $ fdRead fd' count :: IO (Either IOError (String, ByteCount))
+recv port n = do
+  result <- withEncoding char8 $ Ex.try $ fdRead (fd port) count :: IO (Either IOError (String, ByteCount))
   return $ case result of
      Right (str, _) -> B.pack str
      Left _         -> B.empty
@@ -81,14 +80,13 @@ send
   :: SerialPort
   -> B.ByteString
   -> IO Int          -- ^ Number of bytes actually sent
-send (SerialPort fd' _ ) msg =
-  fromIntegral <$> withEncoding char8 (fdWrite fd' (B.unpack msg))
+send port msg =
+  fromIntegral <$> withEncoding char8 (fdWrite (fd port) (B.unpack msg))
 
 
 -- |Flush buffers
 flush :: SerialPort -> IO ()
-flush (SerialPort fd' _) =
-  discardData fd' BothQueues
+flush port = discardData (fd port) BothQueues
 
 
 -- |Close the serial port
@@ -142,11 +140,11 @@ setRTS (SerialPort fd' _) set = do
 setSerialSettings :: SerialPort           -- ^ The currently opened serial port
                   -> SerialPortSettings   -- ^ The new settings
                   -> IO SerialPort        -- ^ New serial port
-setSerialSettings (SerialPort fd' _) new_settings = do
-  termOpts <- getTerminalAttributes fd'
+setSerialSettings port new_settings = do
+  termOpts <- getTerminalAttributes $ fd port
   let termOpts' = configureSettings termOpts new_settings
-  setTerminalAttributes fd' termOpts' Immediately
-  return (SerialPort fd' new_settings)
+  setTerminalAttributes (fd port) termOpts' Immediately
+  return $ SerialPort (fd port) new_settings
 
 
 -- |Get configuration from serial port
