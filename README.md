@@ -1,4 +1,5 @@
 ![Haskell CI](https://github.com/standardsemiconductor/serialport/workflows/Haskell%20CI/badge.svg)
+[![Hackage][hackage-badge]][hackage]
 
 Objectives
 ==========
@@ -25,3 +26,4 @@ Running the tests
 -----------------
 * Run the tests: cabal test --test-options="/dev/ttyACM0 /dev/ttyUSB0"
 
+[hackage]: <https://hackage.haskell.org/package/serialport>
