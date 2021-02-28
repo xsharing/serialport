@@ -28,6 +28,6 @@ Running the tests
 * Run the tests: cabal test --test-options="/dev/ttyACM0 /dev/ttyUSB0"
 
 [hackage]:            <https://hackage.haskell.org/package/serialport>
-[hackage-badge]:      <https://img.shields.io/hackage/v/serialport.svg>
+[hackage-badge]:      <https://img.shields.io/hackage/v/serialport.svg?color=success>
 [hackage-deps-badge]: <https://img.shields.io/hackage-deps/v/serialport.svg>
 [hackage-deps]:       <http://packdeps.haskellers.com/feed?needle=serialport>
