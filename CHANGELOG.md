@@ -1,3 +1,7 @@
+0.5.2 (30/3/2021)
+=================
+* Update package dependency constraints
+
 0.5.1 (16/1/2021)
 =================
 * Lock Posix serial port for exclusive access
