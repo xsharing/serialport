@@ -6,10 +6,9 @@
 -- > import System.Hardware.Serialport
 -- > let port = "COM3"          -- Windows
 -- > let port = "/dev/ttyUSB0"  -- Linux
--- > s <- openSerial port defaultSerialSettings { commSpeed = CS2400 }
--- > send s $ B.pack "AT\r"
--- > recv s 10 >>= print
--- > closeSerial s
+-- > withSerial port defaultSerialSettings{ commSpeed = CS2400 } $ \s -> do
+-- >   send s $ B.pack "AT\r"
+-- >   recv s 10 >>= print
 --
 -- Or use the experimental interface with standard handles:
 --
@@ -17,11 +16,9 @@
 -- > import System.Hardware.Serialport
 -- > let port = "COM3"           -- Windows
 -- > let port = "/dev/ttyUSB0"   -- Linux
--- > h <- hOpenSerial port defaultSerialSettings
--- > hPutStr h "AT\r"
--- > hGetLine h >>= print
--- > hClose h
-
+-- > hWithSerial port defaultSerialSettings $ \h -> do
+-- >   hPutStr h "AT\r"
+-- >   hGetLine h >>= print
 
 module System.Hardware.Serialport (
   -- * Types
