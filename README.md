@@ -20,12 +20,12 @@ Prepare Arduino
 
 Prepare haskell test program
 ----------------------------
-* Configure cabal to build the tests: cabal configure --enable-tests.
-* Build: cabal build
+* Configure cabal to build the tests: `cabal configure --enable-tests`.
+* Build: `cabal build`
 
 Running the tests
 -----------------
-* Run the tests: cabal test --test-options="/dev/ttyACM0 /dev/ttyUSB0"
+* Run the tests: `cabal test --test-options="/dev/ttyACM0 /dev/ttyUSB0"`
 
 [hackage]:            <https://hackage.haskell.org/package/serialport>
 [hackage-badge]:      <https://img.shields.io/hackage/v/serialport.svg?color=success>
