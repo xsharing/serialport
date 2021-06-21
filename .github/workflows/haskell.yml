@@ -20,7 +20,9 @@ jobs:
         exclude:
           # GHC 9.0 doesn't work with windows-*
           - ghc: '9.0'
-            os: [windows-2016, windows-2019]
+            os: windows-2016
+          - ghc: '9.0'
+            os: windows-2019
     name: ${{ matrix.os }} GHC ${{ matrix.ghc }} Cabal ${{ matrix.cabal }}
     steps:
     - name: Checkout
