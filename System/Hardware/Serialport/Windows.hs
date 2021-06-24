@@ -101,18 +101,17 @@ setSerialSettings :: SerialPort           -- ^ The currently opened serial port
                   -> SerialPortSettings   -- ^ The new settings
                   -> IO SerialPort        -- ^ New serial port
 setSerialSettings port new_settings = do
-  let ct = Comm.COMMTIMEOUTS {
-                    Comm.readIntervalTimeout = maxBound :: DWORD,
-                    Comm.readTotalTimeoutMultiplier = maxBound :: DWORD,
-                    Comm.readTotalTimeoutConstant = fromIntegral (timeout new_settings) * 100,
-                    Comm.writeTotalTimeoutMultiplier = 0,
-                    Comm.writeTotalTimeoutConstant = 0 }
-  Comm.setCommTimeouts (handle port) ct
-
+  Comm.setCommTimeouts (handle port) commTimeouts
   Comm.setCommState (handle port) new_settings
-
   return $ SerialPort (handle port) new_settings
-
+  where
+    commTimeouts = Comm.COMMTIMEOUTS
+      { Comm.readIntervalTimeout = maxBound :: DWORD
+      , Comm.readTotalTimeoutMultiplier = maxBound :: DWORD
+      , Comm.readTotalTimeoutConstant = fromIntegral (timeout new_settings) * 100
+      , Comm.writeTotalTimeoutMultiplier = 0
+      , Comm.writeTotalTimeoutConstant = 0 
+      }
 
 -- |Get configuration from serial port
 getSerialSettings :: SerialPort -> SerialPortSettings
