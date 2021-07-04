@@ -10,7 +10,7 @@
 -- >   send s $ B.pack "AT\r"
 -- >   recv s 10 >>= print
 --
--- Or use the experimental interface with standard handles:
+-- Alternatively, use handles to perform IO:
 --
 -- > import System.IO
 -- > import System.Hardware.Serialport
