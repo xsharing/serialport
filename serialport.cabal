@@ -1,5 +1,5 @@
 Name:           serialport
-Version:        0.5.2
+Version:        0.5.3
 Cabal-Version:  >= 1.10
 Build-Type:     Simple
 license:        BSD3

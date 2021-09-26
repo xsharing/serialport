@@ -1,3 +1,9 @@
+0.5.3 (26/09/2021)
+==================
+* Update package dependency constraints
+    * Win32 >= 2.11 && < 2.14
+* Add documentation and code samples
+
 0.5.2 (30/3/2021)
 =================
 * Update package dependency constraints
