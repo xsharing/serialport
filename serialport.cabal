@@ -33,7 +33,7 @@ Library
     Build-Depends:    unix >= 2.7 && < 2.8
     Other-Modules:    System.Hardware.Serialport.Posix
   else
-    Build-Depends:    Win32 >= 2.11 && < 2.13
+    Build-Depends:    Win32 >= 2.11 && < 2.14
     Other-Modules:    System.Hardware.Serialport.Windows
                       System.Win32.Comm
 
