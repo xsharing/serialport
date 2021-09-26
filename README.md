@@ -4,20 +4,40 @@
 [![Hackage][hackage-badge]][hackage]
 [![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 
-## Objectives
-* Cross platform: at least Linux, Windows and Mac OS.
+Cross platform (Linux, Windows and Mac OS) [serial port](https://en.wikipedia.org/wiki/Serial_port) interface.
 
 ## Sample Usage
 
 ```haskell
 import System.IO
 import System.Hardware.Serialport
+import qualified Data.ByteString.Char8 as B
 
 let port = "COM3"         -- Windows
 let port = "/dev/ttyUSB0" -- Linux
-hWithSerial port defaultSerialSettings $ \h -> do
-  hPutStr h "AT\r"
-  hGetLine h >>= print
+withSerial port defaultSerialSettings $ \s -> do
+  send s $ B.pack "AT\r"
+  recv s 10 >>= print
+```
+
+[Concurrently](https://hackage.haskell.org/package/async) read and write a serial port at 19200 [baud](https://learn.sparkfun.com/tutorials/serial-communication/rules-of-serial) using `hWithSerial`:
+```haskell
+import Control.Concurrent.Async ( concurrently_ )
+import Control.Monad            ( forever )
+import System.Hardware.Serialport
+import System.IO
+
+com :: String -> IO ()
+com portPath = hWithSerial portPath serialPortSettings $ \hndl -> do
+  hSetBuffering stdin NoBuffering
+  hSetBuffering stdout NoBuffering
+  concurrently_ (readUart hndl) (writeUart hndl)
+    where
+      readUart  hndl = forever $ putChar =<< hGetChar hndl
+      writeUart hndl = forever $ hPutChar hndl =<< getChar
+
+serialPortSettings :: SerialPortSettings
+serialPortSettings = defaultSerialSettings{ commSpeed = CS19200 }
 ```
 
 ## Tests
