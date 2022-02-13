@@ -1,11 +1,11 @@
 Name:           serialport
-Version:        0.5.3
+Version:        0.5.4
 Cabal-Version:  >= 1.10
 Build-Type:     Simple
 license:        BSD3
 license-file:   LICENSE
 copyright:      (c) 2009-2011 Joris Putcuyps,
-                (c) 2020-2021 David Cox
+                (c) 2020-2022 David Cox
 author:         Joris Putcuyps, David Cox
 maintainer:     David Cox <standard.semiconductor@gmail.com>
 homepage:       https://github.com/standardsemiconductor/serialport

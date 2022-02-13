@@ -1,3 +1,8 @@
+0.5.4 (12/02/2022)
+==================
+* Update package dependency constraints
+    * base >= 4.12 && < 4.17
+
 0.5.3 (26/09/2021)
 ==================
 * Update package dependency constraints
