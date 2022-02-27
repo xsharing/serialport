@@ -21,7 +21,10 @@ jobs:
           # GHC 9.0 doesn't work with windows-*
           #- ghc: '9.0'
           #  os: windows-2019
-          - ghc: ['8.10', '9.0']
+          #  cabal 3.0 supports ghc version < 8.10
+          - ghc: '8.10'
+            cabal: '3.0'
+          - ghc: '9.0'
             cabal: '3.0'
           # GHC 9.0 with Cabal >= 3.4
           - ghc: '9.0'
